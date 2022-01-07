@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from torchvision.utils import save_image
 from utils import increment_trains, gradient_penalty
-from models.architectures.LSUN_WGAN_128 import Discriminator, Generator, initialize_weights
+from models.architectures.LSUN_WGAN_64 import Discriminator, Generator, initialize_weights
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[0]
