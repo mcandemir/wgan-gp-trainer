@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from torchvision.utils import save_image
 from utils import increment_trains, gradient_penalty
-from models.architectures.LSUN_WGAN_64 import Discriminator, Generator, initialize_weights
+from models.architectures.DeepConv_GAN_64 import Discriminator, Generator, initialize_weights
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[0]
@@ -66,6 +66,11 @@ def arg_parser():
     return parser.parse_args()
 
 
+def save_checkpoint(state, filename):
+    print("<=> Saving checkpoint..")
+    torch.save(state, filename)
+
+
 def train(loader, train_dir):
 
     gen = Generator(Z_DIM, CHANNELS_IMG, FEATURES_GEN).to(DEVICE)
@@ -94,6 +99,13 @@ def train(loader, train_dir):
     critic.train()
 
     for epoch in range(NUM_EPOCHS):
+
+        checkpoint = {
+            'state_dict': gen.state_dict(),
+            'optimizer': opt_gen.state_dict()
+        }
+        save_checkpoint(checkpoint, f'{train_dir}/model/catfaces_checkpoint.pth.tar')
+
         for batch_idx, (real, _) in enumerate(loader):
             real = real.to(DEVICE)
             cur_batch_size = real.shape[0]
@@ -180,8 +192,6 @@ def train(loader, train_dir):
                                    f'{train_dir}/generated_images_fixed/generated_img{epoch}_{batch_idx}.png')
 
                     step += 1
-
-    torch.save(gen.state_dict(), f'{train_dir}/model/model.pth.tar')
 
 
 def main(*args):
