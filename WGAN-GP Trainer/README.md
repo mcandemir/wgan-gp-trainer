@@ -27,12 +27,14 @@ the class folders such as **cats**. Same logic applies for celeba dataset.
     │       └── celeb
 
 ### Your models
-**architectures** folder contains the LSUN architectures for images which are
+**architectures** folder contains the Deep Convolutional GAN architectures for images which are
 64x64 and 128x128.
 
     ├── models
     │   └── architectures
-    │       └── LSUN_WGAN_64.py
+    │       ├── DeepConv_GAN_64.py
+    │       └── DeepConv_GAN_128.py
+
 
 ### Auto-generated training folders
 Each time a new train is started, a new file structure as shown below is created 
@@ -51,23 +53,24 @@ Note that if there is no **trains** folder, it will create it automatically.
 Name of the training file can be given as a parameter with `--name`. As an example: 
 `python train.py --name test_catfaces_64`.
 
-    └── trains
-        ├── test_catfaces_64
-        │   ├── generated_grid_images
-        │   ├── generated_grid_images_fixed
-        │   ├── generated_images_fixed
-        │   ├── layout
-        │   ├── logs
-        │   │   ├── criticLoss
-        │   │   ├── fake_different
-        │   │   ├── fake_fixed
-        │   │   ├── fake_singular
-        │   │   ├── genLoss
-        │   │   └── real
-        │   └── model
-        └── test_celeba_128
-            ├── generated_grid_images
-            ├── generated_grid_images_fixed
+    └── trains/
+        ├── catfaces_64/
+        │   ├── generated_grid_images/
+        │   ├── generated_grid_images_fixed/
+        │   ├── generated_images_fixed/
+        │   ├── layout/
+        │   ├── logs/
+        │   │   ├── criticLoss/
+        │   │   ├── fake_different/
+        │   │   ├── fake_fixed/
+        │   │   ├── fake_singular/
+        │   │   ├── genLoss/
+        │   │   └── real/
+        │   └── model/
+        │       └── catfaces_checkpoint.pth.tar
+        └── celeba_128/
+            ├── generated_grid_images/
+            ├── generated_grid_images_fixed/
             .
             .
 
@@ -78,12 +81,43 @@ and then go to the terminal and type: `tensorboard --logdir logs`.
 ### **_Example_**:
 Create your data folder -> add your data -> tune hyperparameters -> start the training by:
 
-    $ python train.py --name test_catfaces_64
+```shell
+$ python train.py --name test_catfaces_64
+```
 
 Keep track of the logs:
 
-    $ cd trains/test_catfaces_64
-    $ tensorboard --logdir logs
+```shell
+$ cd trains/test_catfaces_64
+$ tensorboard --logdir logs
+```
+
+<br>
+
+### **_Evaluate the model_**:
+```shell
+$ python run.py --path (path to model)
+```
+
+You can specify the figure's size with the parameter `--size` (height and width by pixels)
+
+```shell
+$ python run.py --path (path to model) --size 220
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
