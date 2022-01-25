@@ -1,11 +1,9 @@
 import torch
 import torch.nn as nn
+import torchinfo  # to check model architecture summary while testing
 
 
-# Architecture: LSUN Scene modeling: https://arxiv.org/abs/1511.06434
-import torchinfo
-
-
+# Inspired Architecture: LSUN Scene modeling: https://arxiv.org/abs/1511.06434
 class Discriminator(nn.Module):
     def __init__(self, channels_img, features_d):
         super(Discriminator, self).__init__()
@@ -36,7 +34,7 @@ class Discriminator(nn.Module):
     def forward(self, x):
         return self.disc(x)
 
-
+# Inspired Architecture: LSUN Scene modeling: https://arxiv.org/abs/1511.06434
 class Generator(nn.Module):
     def __init__(self, z_dim, channels_img, features_g):
         super(Generator, self).__init__()

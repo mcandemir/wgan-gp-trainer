@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 
-# Architecture: LSUN Scene modeling: https://arxiv.org/abs/1511.06434
+# Architecture: Deep Convolutional GAN: https://arxiv.org/abs/1511.06434
 class Discriminator(nn.Module):
     def __init__(self, channels_img, features_d):
         super(Discriminator, self).__init__()
@@ -33,7 +33,7 @@ class Discriminator(nn.Module):
         return self.disc(x)
 
 
-# Architecture: LSUN Scene modeling: https://arxiv.org/abs/1511.06434
+# Architecture: Deep Convolutional GAN: https://arxiv.org/abs/1511.06434
 class Generator(nn.Module):
     def __init__(self, z_dim, channels_img, features_g):
         super(Generator, self).__init__()
