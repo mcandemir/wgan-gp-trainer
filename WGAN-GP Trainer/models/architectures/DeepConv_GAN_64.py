@@ -1,10 +1,17 @@
 import torch
 import torch.nn as nn
-
+import torchinfo
 
 # Architecture: Deep Convolutional GAN: https://arxiv.org/abs/1511.06434
 class Discriminator(nn.Module):
+
+    # class initialize
     def __init__(self, channels_img, features_d):
+        """
+        :param channels_img: input channels
+        :param features_d: channels that we are
+        going to change as we go through the layers
+        """
         super(Discriminator, self).__init__()
         self.disc = nn.Sequential(
             nn.Conv2d(channels_img, features_d, kernel_size=4, stride=2, padding=1),
@@ -88,5 +95,8 @@ def test():
     assert gen(z).shape == (N, in_channels, H, W)
     print('success')
 
+    torchinfo.summary(critic, (N, in_channels, H, W))
+    torchinfo.summary(gen, (N, z_dim, 1, 1))
 
-test()
+
+# test()
