@@ -105,9 +105,23 @@ You can specify the figure's size with the parameter `--size` (height and width 
 $ python run.py --path (path to model) --size 220
 ```
 
+<br>
 
+## Installing Dependencies 
+### **_Anaconda_**:
+Packages required to training and running
+```shell
+$ conda install python=3.8
+$ conda install pytorch torchvision cudatoolkit=10.2 -c pytorch
+$ conda install tensorboard
+$ conda install pyyaml
+$ conda install matplotlib
+```
 
-
+Optional
+```shell
+$ conda install -c conda-forge torchinfo # not a must
+```
 
 
 
