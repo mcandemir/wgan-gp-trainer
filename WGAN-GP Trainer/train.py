@@ -142,56 +142,56 @@ def train(loader, train_dir):
                 # update grads
                 opt_critic.step()
 
-                # Train gen ====================================================================
-                output = critic(fake).reshape(-1)
-                loss_gen = -torch.mean(output)
+            # Train gen ====================================================================
+            output = critic(fake).reshape(-1)
+            loss_gen = -torch.mean(output)
 
-                # write loss ----------------------------------------------------------------------
-                writer_gen.add_scalar('GeneratorLoss/Epochs', loss_gen, global_step=step)
+            # write loss ----------------------------------------------------------------------
+            writer_gen.add_scalar('GeneratorLoss/Epochs', loss_gen, global_step=step)
 
-                gen.zero_grad()
-                loss_gen.backward()
-                opt_gen.step()
+            gen.zero_grad()
+            loss_gen.backward()
+            opt_gen.step()
 
-                # print on tensorboard
-                # Print on tensorboard
-                if batch_idx % 100 == 0:
-                    print(f'Epoch [{epoch}/{NUM_EPOCHS}] Batch {batch_idx}/{len(loader)}'
-                          f'Critic Loss: {loss_critic}')
+            # print on tensorboard
+            # Print on tensorboard
+            if batch_idx % 100 == 0:
+                print(f'Epoch [{epoch}/{NUM_EPOCHS}] Batch {batch_idx}/{len(loader)}'
+                      f'Critic Loss: {loss_critic}')
 
-                    with torch.no_grad():
-                        fake_fixed = gen(fixed_noise)
-                        fake_different = gen(noise)
+                with torch.no_grad():
+                    fake_fixed = gen(fixed_noise)
+                    fake_different = gen(noise)
 
-                        # take out (up to) 32 examples
-                        GRID_SIZE = 32 if BATCH_SIZE > 32 else BATCH_SIZE
+                    # take out (up to) 32 examples
+                    GRID_SIZE = 32 if BATCH_SIZE > 32 else BATCH_SIZE
 
-                        img_grid_real = torchvision.utils.make_grid(
-                            real[:GRID_SIZE], normalize=True
-                        )
-                        img_grid_fake_fixed = torchvision.utils.make_grid(
-                            fake_fixed[:GRID_SIZE], normalize=True
-                        )
-                        img_grid_fake_different = torchvision.utils.make_grid(
-                            fake_different[:GRID_SIZE], normalize=True
-                        )
-                        img_grid_fake_singular = torchvision.utils.make_grid(
-                            fake_different[0], normalize=True
-                        )
+                    img_grid_real = torchvision.utils.make_grid(
+                        real[:GRID_SIZE], normalize=True
+                    )
+                    img_grid_fake_fixed = torchvision.utils.make_grid(
+                        fake_fixed[:GRID_SIZE], normalize=True
+                    )
+                    img_grid_fake_different = torchvision.utils.make_grid(
+                        fake_different[:GRID_SIZE], normalize=True
+                    )
+                    img_grid_fake_singular = torchvision.utils.make_grid(
+                        fake_different[0], normalize=True
+                    )
 
-                        writer_real.add_image('Real', img_grid_real, global_step=step)
-                        writer_fake_fixed.add_image('Fake_fixed', img_grid_fake_fixed, global_step=step)
-                        writer_fake_different.add_image('Fake_different', img_grid_fake_different, global_step=step)
-                        writer_fake_singular.add_image('Fake_singular', img_grid_fake_singular, global_step=step)
+                    writer_real.add_image('Real', img_grid_real, global_step=step)
+                    writer_fake_fixed.add_image('Fake_fixed', img_grid_fake_fixed, global_step=step)
+                    writer_fake_different.add_image('Fake_different', img_grid_fake_different, global_step=step)
+                    writer_fake_singular.add_image('Fake_singular', img_grid_fake_singular, global_step=step)
 
-                        save_image(img_grid_fake_fixed,
-                                   f'{train_dir}/generated_grid_images_fixed/generated_img{epoch}_{batch_idx}.png')
-                        save_image(img_grid_fake_different,
-                                   f'{train_dir}/generated_grid_images/generated_img{epoch}_{batch_idx}.png')
-                        save_image(img_grid_fake_singular,
-                                   f'{train_dir}/generated_images_fixed/generated_img{epoch}_{batch_idx}.png')
+                    save_image(img_grid_fake_fixed,
+                               f'{train_dir}/generated_grid_images_fixed/generated_img{epoch}_{batch_idx}.png')
+                    save_image(img_grid_fake_different,
+                               f'{train_dir}/generated_grid_images/generated_img{epoch}_{batch_idx}.png')
+                    save_image(img_grid_fake_singular,
+                               f'{train_dir}/generated_images_fixed/generated_img{epoch}_{batch_idx}.png')
 
-                    step += 1
+                step += 1
 
 
 def main(*args):
