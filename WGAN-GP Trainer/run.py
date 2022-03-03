@@ -17,8 +17,8 @@ with open('train.config.yaml', 'r') as cfg:
 def load_checkpoint_model(PATH):
     gen = Generator(Z_DIM, CHANNELS_IMG, FEATURES_GEN)
 
-    torch.load(PATH, map_location=lambda storage, location: storage)
-    gen.load_state_dict(torch.load(PATH)['state_dict'])
+    torch.load(PATH, map_location=torch.device('cpu'))
+    gen.load_state_dict(torch.load(PATH, map_location=torch.device('cpu'))['state_dict'])
     gen.eval()
     return gen
 
