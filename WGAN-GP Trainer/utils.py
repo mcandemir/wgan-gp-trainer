@@ -2,7 +2,6 @@ import os
 import yaml
 import torch
 import torch.nn as nn
-import torchinfo
 
 
 def increment_trains(config, name='train'):
