@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import torchinfo
+# import torchinfo
 
 # Architecture: Deep Convolutional GAN: https://arxiv.org/abs/1511.06434
 class Discriminator(nn.Module):

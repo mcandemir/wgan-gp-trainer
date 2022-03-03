@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import torchinfo  # to check model architecture summary while testing
+# import torchinfo  # to check model architecture summary while testing
 
 
 # Inspired Architecture: LSUN Scene modeling: https://arxiv.org/abs/1511.06434
@@ -114,4 +114,4 @@ def test2():
     torchinfo.summary(critic, (N, in_channels, H, W))
     torchinfo.summary(gen, (N, z_dim, 1, 1))
 
-test2()
+# test2()
